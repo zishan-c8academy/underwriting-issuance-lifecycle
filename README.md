@@ -31,6 +31,7 @@ is not an official Camunda product.
 - [Troubleshooting](#troubleshooting)
 - [Make it real: swapping human steps for connectors](#make-it-real-swapping-human-steps-for-connectors)
 - [Deploying somewhere other than Camunda 8 Run](#deploying-somewhere-other-than-camunda-8-run)
+- [Using your own React or Angular UI](#using-your-own-react-or-angular-ui)
 - [How the patterns work](#how-the-patterns-work)
 - [Project layout](#project-layout)
 
@@ -46,6 +47,7 @@ is not an official Camunda product.
 | **Timers and escalation** | overdue tasks raise a shared escalation, without interrupting the task |
 | **Reusable sub-processes** | three process definitions, composed by call activities |
 | **Queues per persona** | candidate groups turn Tasklist into a work queue per role |
+| **Swimlanes** | the approval chain is laned by owning team, so responsibility is visible |
 | **Audit history** | every task, decision and timestamp, natively in Operate |
 
 ## New to Camunda? Read this first
@@ -94,6 +96,12 @@ The issuer name and country are screened by a **DMN decision**. `CLEAR` skips st
 Every approval task carries a **non-interrupting overdue timer**. When one fires it raises a single
 shared escalation that **one** event sub-process turns into a supervisor task, while the original task
 stays open and workable. Diagram at the top of this README.
+
+The process is **laned by owning team** (Compliance, Legal, Crediting Participant, Underwriting
+Operations, Supervisor) so you can see at a glance who is responsible for each step. Worth knowing:
+in Camunda 8 **lanes are documentation only, they have no execution semantics**. The actual work
+assignment comes from each task's `candidateGroups`, which here match the lane names. Lanes are used
+only where more than one team participates, which is why offering capture (all analysts) has none.
 
 ### 3. Agent Confirmation
 
@@ -257,6 +265,18 @@ The `bpmn/`, `dmn/` and `forms/` files deploy **unchanged** to Camunda 8 Run, Do
 Self-Managed on Kubernetes and SaaS. Only the connection and credentials differ.
 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) has the matrix.
 
+## Using your own React or Angular UI
+
+This example uses Camunda Tasklist for the human steps, so there is no frontend to build. That is a
+convenience, not a limit: Camunda is headless, and Tasklist is just one client of a public API your own
+application can call instead.
+
+**[docs/CUSTOM-UI.md](docs/CUSTOM-UI.md)** is the starting map: the three integration patterns (use
+Tasklist, render these same Camunda Forms inside your own app shell, or build fully custom screens),
+the exact REST endpoints you need, a ~30 line React example of the "ask the engine what is next,
+render it, post the result back" loop, why a thin backend belongs between your UI and Camunda, and
+which of these three workflows suits which pattern.
+
 ## How the patterns work
 
 - **[docs/ESCALATION.md](docs/ESCALATION.md)**: the overdue-task escalation. Non-interrupting boundary
@@ -289,6 +309,7 @@ dmn/compliance-screening.dmn         issuer name and country screening, FIRST hi
 forms/*.form                         13 Camunda Forms, one per user task
 scripts/simulate-client-response.sh  publishes the client-response message
 docs/DEPLOYMENT.md                   Camunda 8 Run, Docker, Self-Managed, SaaS
+docs/CUSTOM-UI.md                    putting your own React or Angular UI on top
 docs/ESCALATION.md                   the shared overdue-task escalation pattern
 docs/AUDIT-AND-QUEUES.md             audit history and persona queues
 docs/images/                         the diagrams and form screenshots in this README
