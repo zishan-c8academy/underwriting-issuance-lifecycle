@@ -6,8 +6,14 @@
 > the security master when they do not match.
 >
 > Everything is BPMN, DMN and Camunda Forms. **No custom code, no worker process, no secrets, no
-> external services.** Deploy it from Desktop Modeler to a local Camunda 8 Run and click through it in
-> about ten minutes.
+> external services.** Deploy it to **Camunda 8 SaaS** (the free trial is enough) or to a local
+> **Camunda 8 Run**, and click through it in about ten minutes.
+>
+> **Verified end to end on Camunda 8 SaaS:** all 18 resources deploy, every human step completes, the
+> DMN routes, the participant Pending loop re-asks, the client-response message correlates on the CUSIP
+> across two call activities, the mismatch path opens both correction tasks in parallel, the overdue
+> timer raises a supervisor escalation without cancelling the original task, and the instance reaches
+> COMPLETED.
 
 **Generic example, illustrative content.** The workflow names, field lists, queue names, timings,
 CUSIPs, issuer names and compliance lists here are invented or generic industry vocabulary, used to
@@ -30,7 +36,7 @@ is not an official Camunda product.
 - [Run it: step by step](#run-it-step-by-step)
 - [Troubleshooting](#troubleshooting)
 - [Make it real: swapping human steps for connectors](#make-it-real-swapping-human-steps-for-connectors)
-- [Deploying somewhere other than Camunda 8 Run](#deploying-somewhere-other-than-camunda-8-run)
+- [Deploying to other Camunda 8 flavours](#deploying-to-other-camunda-8-flavours)
 - [Using your own React or Angular UI](#using-your-own-react-or-angular-ui)
 - [How the patterns work](#how-the-patterns-work)
 - [Project layout](#project-layout)
@@ -147,14 +153,28 @@ also carry a priority, so a queue can be sorted by urgency.
 
 ## Run it: step by step
 
-### Prerequisites
+Pick either target. The models are identical, only the deployment step differs.
 
+### Option A: Camunda 8 SaaS (nothing to install)
+
+1. Create a cluster in [Camunda Console](https://camunda.io) (the **free trial** is enough).
+2. Deploy the 4 BPMN, the DMN and the 13 forms with **Web Modeler** (create a project and upload them),
+   or with Desktop Modeler using cluster credentials from Console.
+3. Open **Tasklist** and **Operate** from Console, then jump to [step 4](#4-work-the-queues-in-tasklist)
+   below and work the queues.
+
+For step 6 you publish the client-response message against the cluster's REST API instead of running the
+local script. The exact call is in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
+### Option B: Camunda 8 Run (local, offline)
+
+Prerequisites:
 - **[Camunda 8 Run](https://docs.camunda.io/docs/self-managed/setup/deploy/local/c8run/)**, downloaded
   and unzipped. It bundles Zeebe, Operate and Tasklist. Requires a recent JDK.
 - **[Desktop Modeler](https://camunda.com/download/modeler/)**, to deploy.
-- That is all. No Docker, no broker, no cloud account, no API keys.
+- No Docker, no broker, no cloud account, no API keys.
 
-### 1. Start Camunda 8 Run
+#### 1. Start Camunda 8 Run
 
 ```bash
 cd /path/to/camunda8-run
@@ -164,7 +184,7 @@ cd /path/to/camunda8-run
 Wait for it to report that it is ready, then open **http://localhost:8080**. Log in with `demo` /
 `demo`. You should see Operate and Tasklist.
 
-### 2. Deploy the models
+#### 2. Deploy the models
 
 1. Open Desktop Modeler, choose **Open folder**, and select this repository.
 2. Open `bpmn/underwriting-issuance.bpmn`.
@@ -173,7 +193,7 @@ Wait for it to report that it is ready, then open **http://localhost:8080**. Log
 4. In the resource list, **include all 18 resources**: the 4 BPMN files, the DMN, and the 13 forms.
    Deploying the BPMN alone will fail at runtime with a missing-form error.
 
-### 3. Start an instance
+#### 3. Start an instance
 
 In Modeler, with `underwriting-issuance.bpmn` open, click **Run**. Or in **Operate**, go to
 **Processes**, pick **Underwriting Issuance (lifecycle)** and start a new instance.
@@ -253,17 +273,26 @@ menu (the wrench), and pick the connector you want. Fill in its properties, then
 reference that no longer applies. The surrounding gateways and flows keep working as long as the task
 still produces the variables they test.
 
-**One thing to know about connectors and firewalls:** connectors execute in a **connector runtime**. On
-Camunda 8 Run, Docker and Self-Managed that runtime sits inside your own network, so it can reach
-internal systems directly. On SaaS it is Camunda-hosted, so reaching an internal system needs either
-network exposure or a **hybrid** self-managed connector runtime. See
-[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+**Connectors, workers and your firewall.** Nothing here needs network access to your systems today,
+but that changes as soon as you wire up a connector or a worker. Two facts decide whether SaaS works
+for an internal system:
 
-## Deploying somewhere other than Camunda 8 Run
+- **Job workers always run wherever you put them.** A worker connects **outbound** to the gateway and
+  polls for jobs, so a worker in your own datacenter can serve a **SaaS** cluster and reach internal
+  systems directly. Nothing is exposed inbound.
+- **Connectors execute in a connector runtime.** On Camunda 8 Run, Docker and Self-Managed that runtime
+  is already inside your network. On SaaS it is Camunda-hosted, so to reach an internal system you run
+  the connector runtime yourself in **hybrid mode**, attached to your SaaS cluster.
 
-The `bpmn/`, `dmn/` and `forms/` files deploy **unchanged** to Camunda 8 Run, Docker Compose,
-Self-Managed on Kubernetes and SaaS. Only the connection and credentials differ.
-[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) has the matrix.
+So "SaaS" and "our integrations stay inside our network" are not in conflict. The configuration for
+both is in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
+## Deploying to other Camunda 8 flavours
+
+The `bpmn/`, `dmn/` and `forms/` files deploy **unchanged** to SaaS, Camunda 8 Run, Docker Compose and
+Self-Managed on Kubernetes. Only the connection and credentials differ.
+[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) has the matrix, the SaaS steps, and how to keep connectors and
+workers inside your own network even when the cluster is in SaaS.
 
 ## Using your own React or Angular UI
 
