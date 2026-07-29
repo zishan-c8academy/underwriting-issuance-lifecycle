@@ -13,9 +13,9 @@
       "readonly": true
     },
     {
-      "text": "### Recorded values (from ECD)",
+      "text": "### Recorded values (from capture)",
       "type": "text",
-      "id": "t_cd_dtc"
+      "id": "t_cd_recorded"
     },
     {
       "label": "First Payment Date",

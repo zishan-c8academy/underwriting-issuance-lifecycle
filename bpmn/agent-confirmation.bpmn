@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_AgentConfirmation" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.x" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
   <bpmn:process id="AgentConfirmationEmail" name="Agent Confirmation Email" isExecutable="true">
-    <bpmn:documentation>Security attribute confirmation, from client outreach through Masterfile update. UW Operations sends the agent a blank Security Attributes page with the CUSIP and Closing Date populated; the process then waits for the client to return it. An internal user compares the returned values against the closing documentation, and if they do not match, the Masterfile update and a Supervisor Review are both triggered.</bpmn:documentation>
+    <bpmn:documentation>Security attribute confirmation, from client outreach through security master update. UW Operations sends the agent a blank Security Attributes page with the CUSIP and Closing Date populated; the process then waits for the client to return it. An internal user compares the returned values against the closing documentation, and if they do not match, the security master update and a Supervisor Review are both triggered.</bpmn:documentation>
 
     <bpmn:startEvent id="Start_AC" name="Confirmation needed">
       <bpmn:outgoing>Flow_a1</bpmn:outgoing>
@@ -71,27 +71,27 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_mismatch" name="mismatch" sourceRef="Gateway_ValuesMatch" targetRef="Gateway_CorrectionSplit" />
 
-    <!-- ══════ Mismatch: Masterfile update AND Supervisor Review are both triggered ══════ -->
+    <!-- ══════ Mismatch: security master update AND Supervisor Review are both triggered ══════ -->
     <bpmn:parallelGateway id="Gateway_CorrectionSplit" name="Correct and review">
       <bpmn:incoming>Flow_mismatch</bpmn:incoming>
       <bpmn:outgoing>Flow_split_update</bpmn:outgoing>
       <bpmn:outgoing>Flow_split_super</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:sequenceFlow id="Flow_split_update" sourceRef="Gateway_CorrectionSplit" targetRef="Task_UpdateMasterfile" />
+    <bpmn:sequenceFlow id="Flow_split_update" sourceRef="Gateway_CorrectionSplit" targetRef="Task_UpdateSecurityMaster" />
     <bpmn:sequenceFlow id="Flow_split_super" sourceRef="Gateway_CorrectionSplit" targetRef="Task_SupervisorReview" />
 
-    <bpmn:userTask id="Task_UpdateMasterfile" name="Update Masterfile">
-      <bpmn:documentation>If the recorded values do not match the client-confirmed values and closing documentation, update the applicable security attributes in the Masterfile.</bpmn:documentation>
+    <bpmn:userTask id="Task_UpdateSecurityMaster" name="Update Security Master">
+      <bpmn:documentation>If the recorded values do not match the client-confirmed values and closing documentation, update the applicable security attributes in the security master.</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:userTask />
-        <zeebe:formDefinition formId="update-masterfile" bindingType="latest" />
+        <zeebe:formDefinition formId="update-security-master" bindingType="latest" />
         <zeebe:assignmentDefinition candidateGroups="uw-operations" />
         <zeebe:priorityDefinition priority="80" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_split_update</bpmn:incoming>
       <bpmn:outgoing>Flow_update_join</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_update_join" sourceRef="Task_UpdateMasterfile" targetRef="Gateway_CorrectionJoin" />
+    <bpmn:sequenceFlow id="Flow_update_join" sourceRef="Task_UpdateSecurityMaster" targetRef="Gateway_CorrectionJoin" />
 
     <bpmn:userTask id="Task_SupervisorReview" name="Supervisor Review">
       <bpmn:documentation>A supervisor reviews the discrepancy that triggered the correction.</bpmn:documentation>
@@ -113,7 +113,7 @@
     </bpmn:parallelGateway>
     <bpmn:sequenceFlow id="Flow_a5" sourceRef="Gateway_CorrectionJoin" targetRef="End_Corrected" />
 
-    <bpmn:endEvent id="End_Corrected" name="Corrected in Masterfile">
+    <bpmn:endEvent id="End_Corrected" name="Corrected in security master">
       <bpmn:incoming>Flow_a5</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:endEvent id="End_NoCorrection" name="Confirmed, no correction">
@@ -173,7 +173,7 @@
         <dc:Bounds x="910" y="315" width="50" height="50" />
         <bpmndi:BPMNLabel><dc:Bounds x="896" y="371" width="80" height="14" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_UpdateMasterfile_di" bpmnElement="Task_UpdateMasterfile"><dc:Bounds x="1020" y="260" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_UpdateSecurityMaster_di" bpmnElement="Task_UpdateSecurityMaster"><dc:Bounds x="1020" y="260" width="170" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_SupervisorReview_di" bpmnElement="Task_SupervisorReview"><dc:Bounds x="1020" y="380" width="170" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_CorrectionJoin_di" bpmnElement="Gateway_CorrectionJoin">
         <dc:Bounds x="1240" y="315" width="50" height="50" />

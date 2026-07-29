@@ -111,7 +111,7 @@
     }
   ],
   "type": "default",
-  "id": "ecd-security-info",
+  "id": "capture-security-info",
   "executionPlatform": "Camunda Cloud",
   "executionPlatformVersion": "8.7.0",
   "schemaVersion": 16

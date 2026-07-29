@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "text": "## Register Settlement Eligibility\nAll approvals are complete. Add the CUSIP to the Masterfile to make it settlement eligible.",
+      "text": "## Register Settlement Eligibility\nAll approvals are complete. Add the CUSIP to the security master to make it settlement eligible.",
       "type": "text",
       "id": "t_rs_h"
     },
@@ -27,14 +27,14 @@
       "readonly": true
     },
     {
-      "label": "Masterfile record id",
+      "label": "Security master record id",
       "type": "textfield",
-      "key": "masterfileRecordId",
+      "key": "securityMasterRecordId",
       "id": "f_rs_record",
       "validate": {
         "required": true
       },
-      "description": "Reference for the Masterfile entry you created"
+      "description": "Reference for the security master entry you created"
     },
     {
       "label": "Registration notes",

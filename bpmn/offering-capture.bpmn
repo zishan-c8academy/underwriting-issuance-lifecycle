@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_ECDIntake" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.x" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
-  <bpmn:process id="ECDIntake" name="ECD (capture offering and security)" isExecutable="true">
-    <bpmn:documentation>ECD data capture: a five-step sequence from security identification through issuer submission. Every step is a Camunda user task with a form, so the sequence and the fields live in the model rather than in front-end code. Worked by the UW Analyst queue.</bpmn:documentation>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_OfferingCapture" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.x" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:process id="OfferingCapture" name="offering capture (capture offering and security)" isExecutable="true">
+    <bpmn:documentation>offering capture: a five-step sequence from security identification through issuer submission. Every step is a Camunda user task with a form, so the sequence and the fields live in the model rather than in front-end code. Worked by the UW Analyst queue.</bpmn:documentation>
 
-    <bpmn:startEvent id="Start_ECD" name="Start ECD">
+    <bpmn:startEvent id="Start_Capture" name="Start Offering Capture">
       <bpmn:outgoing>Flow_e1</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_e1" sourceRef="Start_ECD" targetRef="Task_EnterCusip" />
+    <bpmn:sequenceFlow id="Flow_e1" sourceRef="Start_Capture" targetRef="Task_EnterCusip" />
 
     <bpmn:userTask id="Task_EnterCusip" name="Enter CUSIP">
       <bpmn:documentation>Input the CUSIP to identify the security.</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:userTask />
-        <zeebe:formDefinition formId="ecd-enter-cusip" bindingType="latest" />
+        <zeebe:formDefinition formId="capture-enter-cusip" bindingType="latest" />
         <zeebe:assignmentDefinition candidateGroups="uw-analysts" />
         <zeebe:priorityDefinition priority="50" />
       </bpmn:extensionElements>
@@ -25,7 +25,7 @@
       <bpmn:documentation>Capture offering-level details: Base CUSIP, Issuer Name, Issuer Country, Closing Date, Paying Agent, Brokerage Agreement Date.</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:userTask />
-        <zeebe:formDefinition formId="ecd-offering-info" bindingType="latest" />
+        <zeebe:formDefinition formId="capture-offering-info" bindingType="latest" />
         <zeebe:assignmentDefinition candidateGroups="uw-analysts" />
         <zeebe:priorityDefinition priority="50" />
       </bpmn:extensionElements>
@@ -38,7 +38,7 @@
       <bpmn:documentation>Confirm security-level attributes: Security Takedown, Dated Date, First Payment Date, Maturity Date, Interest Type, Interest Start, Interest End, Interest Rate, Payment Frequency.</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:userTask />
-        <zeebe:formDefinition formId="ecd-security-info" bindingType="latest" />
+        <zeebe:formDefinition formId="capture-security-info" bindingType="latest" />
         <zeebe:assignmentDefinition candidateGroups="uw-analysts" />
         <zeebe:priorityDefinition priority="50" />
       </bpmn:extensionElements>
@@ -48,26 +48,26 @@
     <bpmn:sequenceFlow id="Flow_e4" sourceRef="Task_SecurityInfo" targetRef="Task_SummarySubmit" />
 
     <bpmn:userTask id="Task_SummarySubmit" name="Summary and Submit to Issuer">
-      <bpmn:documentation>Review the entered information, then submit the completed ECD record to the issuer. The source process names Summary and Submit to Issuer as two steps; they are one review-and-confirm screen here because the submission is the act of completing the review. Split them if you want them tracked as separate audit events.</bpmn:documentation>
+      <bpmn:documentation>Review the entered information, then submit the completed offering record to the issuer. The source process names Summary and Submit to Issuer as two steps; they are one review-and-confirm screen here because the submission is the act of completing the review. Split them if you want them tracked as separate audit events.</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:userTask />
-        <zeebe:formDefinition formId="ecd-summary-submit" bindingType="latest" />
+        <zeebe:formDefinition formId="capture-summary-submit" bindingType="latest" />
         <zeebe:assignmentDefinition candidateGroups="uw-analysts" />
         <zeebe:priorityDefinition priority="60" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_e4</bpmn:incoming>
       <bpmn:outgoing>Flow_e5</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_e5" sourceRef="Task_SummarySubmit" targetRef="End_ECD" />
+    <bpmn:sequenceFlow id="Flow_e5" sourceRef="Task_SummarySubmit" targetRef="End_Capture" />
 
-    <bpmn:endEvent id="End_ECD" name="Submitted to issuer">
+    <bpmn:endEvent id="End_Capture" name="Submitted to issuer">
       <bpmn:incoming>Flow_e5</bpmn:incoming>
     </bpmn:endEvent>
   </bpmn:process>
 
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ECDIntake">
-      <bpmndi:BPMNShape id="Start_ECD_di" bpmnElement="Start_ECD">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="OfferingCapture">
+      <bpmndi:BPMNShape id="Start_Capture_di" bpmnElement="Start_Capture">
         <dc:Bounds x="162" y="182" width="36" height="36" />
         <bpmndi:BPMNLabel><dc:Bounds x="154" y="225" width="54" height="14" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
@@ -75,7 +75,7 @@
       <bpmndi:BPMNShape id="Task_OfferingInfo_di" bpmnElement="Task_OfferingInfo"><dc:Bounds x="440" y="160" width="140" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_SecurityInfo_di" bpmnElement="Task_SecurityInfo"><dc:Bounds x="630" y="160" width="140" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_SummarySubmit_di" bpmnElement="Task_SummarySubmit"><dc:Bounds x="820" y="160" width="170" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="End_ECD_di" bpmnElement="End_ECD">
+      <bpmndi:BPMNShape id="End_Capture_di" bpmnElement="End_Capture">
         <dc:Bounds x="1042" y="182" width="36" height="36" />
         <bpmndi:BPMNLabel><dc:Bounds x="1022" y="225" width="78" height="14" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>

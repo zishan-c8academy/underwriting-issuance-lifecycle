@@ -65,7 +65,7 @@
     }
   ],
   "type": "default",
-  "id": "ecd-offering-info",
+  "id": "capture-offering-info",
   "executionPlatform": "Camunda Cloud",
   "executionPlatformVersion": "8.7.0",
   "schemaVersion": 16

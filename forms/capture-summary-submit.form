@@ -52,14 +52,14 @@
       }
     },
     {
-      "label": "Submit this ECD record to the issuer",
+      "label": "Submit this offering record to the issuer",
       "type": "checkbox",
       "key": "submitToIssuer",
       "id": "f_submitToIssuer"
     }
   ],
   "type": "default",
-  "id": "ecd-summary-submit",
+  "id": "capture-summary-submit",
   "executionPlatform": "Camunda Cloud",
   "executionPlatformVersion": "8.7.0",
   "schemaVersion": 16

@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "text": "## Update Masterfile\nThe recorded values do not match. Update the applicable security attributes in the Masterfile.",
+      "text": "## Update Security Master\nThe recorded values do not match. Update the applicable security attributes in the security master.",
       "type": "text",
       "id": "t_um_h"
     },
@@ -44,9 +44,9 @@
       "id": "f_um_pf"
     },
     {
-      "label": "What was changed in the Masterfile",
+      "label": "What was changed in the security master",
       "type": "textarea",
-      "key": "masterfileUpdateNotes",
+      "key": "securityMasterUpdateNotes",
       "id": "f_um_notes",
       "validate": {
         "required": true
@@ -54,7 +54,7 @@
     }
   ],
   "type": "default",
-  "id": "update-masterfile",
+  "id": "update-security-master",
   "executionPlatform": "Camunda Cloud",
   "executionPlatformVersion": "8.7.0",
   "schemaVersion": 16

@@ -20,7 +20,7 @@ set -euo pipefail
 CUSIP="${1:-}"
 if [[ -z "$CUSIP" ]]; then
   echo "Usage: $0 <cusip> [firstPaymentDate] [maturityDate] [interestRate] [paymentFrequency]" >&2
-  echo "The CUSIP must match the one entered in the ECD step (it is the correlation key)." >&2
+  echo "The CUSIP must match the one entered in the offering capture step (it is the correlation key)." >&2
   exit 1
 fi
 
@@ -67,7 +67,7 @@ else
   echo >&2
   echo "Common causes:" >&2
   echo "  - No instance is waiting yet. Complete the Send Confirmation Email task first." >&2
-  echo "  - The CUSIP does not match the one entered in ECD (it is the correlation key)." >&2
+  echo "  - The CUSIP does not match the one entered in offering capture (it is the correlation key)." >&2
   echo "  - Auth: Camunda 8 Run defaults to demo/demo. Set C8_AUTH='' if you disabled auth." >&2
   exit 1
 fi

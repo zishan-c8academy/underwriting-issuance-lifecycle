@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "text": "## Supervisor Review\nReview the discrepancy that triggered the Masterfile correction.",
+      "text": "## Supervisor Review\nReview the discrepancy that triggered the security master correction.",
       "type": "text",
       "id": "t_sr_h"
     },

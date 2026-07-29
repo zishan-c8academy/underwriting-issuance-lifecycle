@@ -17,11 +17,11 @@ through a shared inbox: the work arrives in the right queue because the model sa
 
 | Queue | Owns |
 |---|---|
-| `uw-analysts` | ECD: Enter CUSIP, Offering Info, Security Info, Summary and Submit |
+| `uw-analysts` | Offering Capture: Enter CUSIP, Offering Info, Security Info, Summary and Submit |
 | `compliance-officers` | Compliance Review (only when the DMN says REVIEW) |
 | `legal-counsel` | Legal Approval |
 | `crediting-participants` | Crediting Participant Approval |
-| `uw-operations` | Register Settlement Eligibility, Send Confirmation Email, Compare to Closing Docs, Update Masterfile |
+| `uw-operations` | Register Settlement Eligibility, Send Confirmation Email, Compare to Closing Docs, Update Security Master |
 | `underwriting-supervisors` | Supervisor Review, and every overdue Escalation Review |
 
 Tasks also carry a **priority** (`zeebe:priorityDefinition`), so a queue can be sorted by urgency:
@@ -42,7 +42,7 @@ and filter by candidate group.
 - the **variables** at each point, including the client-confirmed values and the comparison outcome,
 - **incidents**, if anything failed,
 - the parent/child relationship for the three called workflows, so you can click from the lifecycle
-  instance into the ECD, Settlement Eligibility or Agent Confirmation instance.
+  instance into the Offering Capture, Settlement Eligibility or Agent Confirmation instance.
 
 Who did what comes from the task data: Tasklist records the **assignee** and completion time for each
 task, alongside the candidate group that owned it. Combined with the form values (each decision field

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_SettlementEligibility" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.x" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
   <bpmn:process id="SettlementEligibility" name="Settlement Eligibility (approvals)" isExecutable="true">
-    <bpmn:documentation>Approvals required for a security to achieve Settlement Eligibility. The issuer name and country are screened against the compliance list by a DMN decision; anything the rules cannot clear goes to a compliance officer. Legal and the Crediting Participant then approve in turn, and the security is registered on the Masterfile. Every approval task is watched by a non-interrupting timer: if a task is overdue it raises an escalation that one shared event sub-process turns into a supervisor task, without disturbing the task itself.</bpmn:documentation>
+    <bpmn:documentation>Approvals required for a security to achieve Settlement Eligibility. The issuer name and country are screened against the compliance list by a DMN decision; anything the rules cannot clear goes to a compliance officer. Legal and the Crediting Participant then approve in turn, and the security is registered on the security master. Every approval task is watched by a non-interrupting timer: if a task is overdue it raises an escalation that one shared event sub-process turns into a supervisor task, without disturbing the task itself.</bpmn:documentation>
 
-    <bpmn:startEvent id="Start_SE" name="ECD submitted">
+    <bpmn:startEvent id="Start_SE" name="Offering submitted">
       <bpmn:outgoing>Flow_s1</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_s1" sourceRef="Start_SE" targetRef="Task_ComplianceScreening" />
@@ -139,9 +139,9 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_cp_rejected" name="rejected" sourceRef="Gateway_CPApproved" targetRef="End_NotEligible" />
 
-    <!-- ══════ Settlement Eligibility: register on the Masterfile ══════ -->
-    <bpmn:userTask id="Task_RegisterSE" name="Register Settlement Eligibility (Masterfile)">
-      <bpmn:documentation>Settlement Eligibility is achieved: the CUSIP is officially added to the Masterfile. Modeled as a human confirmation so the example runs with no custom code; point this at your Masterfile system with a REST connector to automate it.</bpmn:documentation>
+    <!-- ══════ Settlement Eligibility: register on the security master ══════ -->
+    <bpmn:userTask id="Task_RegisterSE" name="Register Settlement Eligibility (Security Master)">
+      <bpmn:documentation>Settlement Eligibility is achieved: the CUSIP is officially added to the security master. Modeled as a human confirmation so the example runs with no custom code; point this at your security master system with a REST connector to automate it.</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:userTask />
         <zeebe:formDefinition formId="register-settlement-eligibility" bindingType="latest" />

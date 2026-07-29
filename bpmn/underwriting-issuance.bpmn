@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_UnderwritingIssuance" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.x" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
   <bpmn:process id="UnderwritingIssuance" name="Underwriting Issuance (lifecycle)" isExecutable="true">
-    <bpmn:documentation>End-to-end UW Issuance lifecycle. Start one instance of this process and it walks a security through the three underwriting workflows in order: ECD data capture, Settlement Eligibility approvals, then the Agent Confirmation email loop. Each phase is its own process definition (called here as a call activity) so it can also be deployed, started and owned independently.</bpmn:documentation>
+    <bpmn:documentation>End-to-end UW Issuance lifecycle. Start one instance of this process and it walks a security through the three underwriting workflows in order: offering capture, Settlement Eligibility approvals, then the Agent Confirmation email loop. Each phase is its own process definition (called here as a call activity) so it can also be deployed, started and owned independently.</bpmn:documentation>
 
     <bpmn:startEvent id="Start_Issuance" name="New UW issuance">
-      <bpmn:outgoing>Flow_to_ecd</bpmn:outgoing>
+      <bpmn:outgoing>Flow_to_capture</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_to_ecd" sourceRef="Start_Issuance" targetRef="Call_ECDIntake" />
+    <bpmn:sequenceFlow id="Flow_to_capture" sourceRef="Start_Issuance" targetRef="Call_OfferingCapture" />
 
-    <bpmn:callActivity id="Call_ECDIntake" name="ECD (capture offering)">
-      <bpmn:documentation>Calls the ECDIntake process: Enter CUSIP, Offering Info, Security Info, Summary and Submit to Issuer.</bpmn:documentation>
+    <bpmn:callActivity id="Call_OfferingCapture" name="Offering Capture">
+      <bpmn:documentation>Calls the OfferingCapture process: Enter CUSIP, Offering Info, Security Info, Summary and Submit to Issuer.</bpmn:documentation>
       <bpmn:extensionElements>
-        <zeebe:calledElement processId="ECDIntake" propagateAllChildVariables="true" bindingType="latest" />
+        <zeebe:calledElement processId="OfferingCapture" propagateAllChildVariables="true" bindingType="latest" />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_to_ecd</bpmn:incoming>
+      <bpmn:incoming>Flow_to_capture</bpmn:incoming>
       <bpmn:outgoing>Flow_to_settlement</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:sequenceFlow id="Flow_to_settlement" sourceRef="Call_ECDIntake" targetRef="Call_SettlementEligibility" />
+    <bpmn:sequenceFlow id="Flow_to_settlement" sourceRef="Call_OfferingCapture" targetRef="Call_SettlementEligibility" />
 
     <bpmn:callActivity id="Call_SettlementEligibility" name="Settlement Eligibility (approvals)">
-      <bpmn:documentation>Calls the SettlementEligibility process: compliance screening, Legal Approval, Crediting Participant Approval, then registration on the Masterfile.</bpmn:documentation>
+      <bpmn:documentation>Calls the SettlementEligibility process: compliance screening, Legal Approval, Crediting Participant Approval, then registration on the security master.</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:calledElement processId="SettlementEligibility" propagateAllChildVariables="true" bindingType="latest" />
       </bpmn:extensionElements>
@@ -29,7 +29,7 @@
     <bpmn:sequenceFlow id="Flow_to_agent" sourceRef="Call_SettlementEligibility" targetRef="Call_AgentConfirmation" />
 
     <bpmn:callActivity id="Call_AgentConfirmation" name="Agent Confirmation (attributes)">
-      <bpmn:documentation>Calls the AgentConfirmationEmail process: send the blank security attributes page to the agent, wait for the client response message, compare against closing docs, and correct the Masterfile if the values do not match.</bpmn:documentation>
+      <bpmn:documentation>Calls the AgentConfirmationEmail process: send the blank security attributes page to the agent, wait for the client response message, compare against closing docs, and correct the security master if the values do not match.</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:calledElement processId="AgentConfirmationEmail" propagateAllChildVariables="true" bindingType="latest" />
       </bpmn:extensionElements>
@@ -49,14 +49,14 @@
         <dc:Bounds x="162" y="182" width="36" height="36" />
         <bpmndi:BPMNLabel><dc:Bounds x="146" y="225" width="72" height="14" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Call_ECDIntake_di" bpmnElement="Call_ECDIntake"><dc:Bounds x="250" y="160" width="160" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Call_OfferingCapture_di" bpmnElement="Call_OfferingCapture"><dc:Bounds x="250" y="160" width="160" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Call_SettlementEligibility_di" bpmnElement="Call_SettlementEligibility"><dc:Bounds x="460" y="160" width="180" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Call_AgentConfirmation_di" bpmnElement="Call_AgentConfirmation"><dc:Bounds x="690" y="160" width="180" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="End_Issuance_di" bpmnElement="End_Issuance">
         <dc:Bounds x="920" y="182" width="36" height="36" />
         <bpmndi:BPMNLabel><dc:Bounds x="902" y="225" width="76" height="14" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_to_ecd_di" bpmnElement="Flow_to_ecd"><di:waypoint x="198" y="200" /><di:waypoint x="250" y="200" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_capture_di" bpmnElement="Flow_to_capture"><di:waypoint x="198" y="200" /><di:waypoint x="250" y="200" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_to_settlement_di" bpmnElement="Flow_to_settlement"><di:waypoint x="410" y="200" /><di:waypoint x="460" y="200" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_to_agent_di" bpmnElement="Flow_to_agent"><di:waypoint x="640" y="200" /><di:waypoint x="690" y="200" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_to_end_di" bpmnElement="Flow_to_end"><di:waypoint x="870" y="200" /><di:waypoint x="920" y="200" /></bpmndi:BPMNEdge>
