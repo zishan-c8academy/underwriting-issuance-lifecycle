@@ -1,0 +1,102 @@
+{
+  "components": [
+    {
+      "text": "## Compare to Closing Docs\nCompare what the client returned against the closing documentation and the values we hold on record.",
+      "type": "text",
+      "id": "t_cd_h"
+    },
+    {
+      "label": "CUSIP",
+      "type": "textfield",
+      "key": "cusip",
+      "id": "f_cd_cusip",
+      "readonly": true
+    },
+    {
+      "text": "### Recorded values (from ECD)",
+      "type": "text",
+      "id": "t_cd_dtc"
+    },
+    {
+      "label": "First Payment Date",
+      "type": "textfield",
+      "key": "firstPaymentDate",
+      "id": "f_cd_fpd",
+      "readonly": true
+    },
+    {
+      "label": "Maturity Date",
+      "type": "textfield",
+      "key": "maturityDate",
+      "id": "f_cd_md",
+      "readonly": true
+    },
+    {
+      "label": "Interest Rate (%)",
+      "type": "number",
+      "key": "interestRate",
+      "id": "f_cd_ir",
+      "readonly": true
+    },
+    {
+      "label": "Payment Frequency",
+      "type": "textfield",
+      "key": "paymentFrequency",
+      "id": "f_cd_pf",
+      "readonly": true
+    },
+    {
+      "text": "### Client-confirmed values",
+      "type": "text",
+      "id": "t_cd_client"
+    },
+    {
+      "label": "First Payment Date",
+      "type": "textfield",
+      "key": "clientFirstPaymentDate",
+      "id": "f_cd_cfpd",
+      "readonly": true
+    },
+    {
+      "label": "Maturity Date",
+      "type": "textfield",
+      "key": "clientMaturityDate",
+      "id": "f_cd_cmd",
+      "readonly": true
+    },
+    {
+      "label": "Interest Rate (%)",
+      "type": "number",
+      "key": "clientInterestRate",
+      "id": "f_cd_cir",
+      "readonly": true
+    },
+    {
+      "label": "Payment Frequency",
+      "type": "textfield",
+      "key": "clientPaymentFrequency",
+      "id": "f_cd_cpf",
+      "readonly": true
+    },
+    {
+      "label": "Values match the closing documentation",
+      "type": "checkbox",
+      "key": "valuesMatch",
+      "id": "f_cd_match"
+    },
+    {
+      "label": "Comparison notes",
+      "type": "textarea",
+      "key": "comparisonNotes",
+      "id": "f_cd_notes",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "compare-to-closing-docs",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "schemaVersion": 16
+}

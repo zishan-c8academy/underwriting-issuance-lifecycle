@@ -1,0 +1,70 @@
+{
+  "components": [
+    {
+      "text": "## Compliance Review\nThe automated screening could not clear this issuer. Adjudicate and record your decision.",
+      "type": "text",
+      "id": "t_cr_h"
+    },
+    {
+      "label": "CUSIP",
+      "type": "textfield",
+      "key": "cusip",
+      "id": "f_cr_cusip",
+      "readonly": true
+    },
+    {
+      "label": "Issuer Name",
+      "type": "textfield",
+      "key": "issuerName",
+      "id": "f_cr_issuer",
+      "readonly": true
+    },
+    {
+      "label": "Issuer Country",
+      "type": "textfield",
+      "key": "issuerCountry",
+      "id": "f_cr_country",
+      "readonly": true
+    },
+    {
+      "label": "Why this was flagged",
+      "type": "textarea",
+      "key": "compliance.rationale",
+      "id": "f_cr_rationale",
+      "readonly": true
+    },
+    {
+      "label": "Decision",
+      "type": "select",
+      "key": "complianceDecision",
+      "id": "f_cr_decision",
+      "values": [
+        {
+          "label": "Approve, cleared",
+          "value": "APPROVED"
+        },
+        {
+          "label": "Reject, not eligible",
+          "value": "REJECTED"
+        }
+      ],
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Compliance notes",
+      "type": "textarea",
+      "key": "complianceNotes",
+      "id": "f_cr_notes",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "compliance-review",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "schemaVersion": 16
+}

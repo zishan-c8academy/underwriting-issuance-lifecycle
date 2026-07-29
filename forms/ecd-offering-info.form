@@ -1,0 +1,72 @@
+{
+  "components": [
+    {
+      "text": "## Offering Info\nCapture offering-level details.",
+      "type": "text",
+      "id": "t_off_h"
+    },
+    {
+      "label": "CUSIP",
+      "type": "textfield",
+      "key": "cusip",
+      "id": "f_off_cusip",
+      "readonly": true
+    },
+    {
+      "label": "Base CUSIP",
+      "type": "textfield",
+      "key": "baseCusip",
+      "id": "f_baseCusip",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Issuer Name",
+      "type": "textfield",
+      "key": "issuerName",
+      "id": "f_issuerName",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Issuer Country",
+      "type": "textfield",
+      "key": "issuerCountry",
+      "id": "f_issuerCountry",
+      "validate": {
+        "required": true
+      },
+      "description": "ISO country code, for example US. Drives the compliance screening decision."
+    },
+    {
+      "label": "Closing Date",
+      "type": "textfield",
+      "key": "closingDate",
+      "id": "f_closingDate",
+      "validate": {
+        "required": true
+      },
+      "description": "Format YYYY-MM-DD"
+    },
+    {
+      "label": "Paying Agent",
+      "type": "textfield",
+      "key": "payingAgent",
+      "id": "f_payingAgent"
+    },
+    {
+      "label": "Brokerage Agreement Date",
+      "type": "textfield",
+      "key": "brokerageAgreementDate",
+      "id": "f_brokerageAgreementDate",
+      "description": "Format YYYY-MM-DD"
+    }
+  ],
+  "type": "default",
+  "id": "ecd-offering-info",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "schemaVersion": 16
+}

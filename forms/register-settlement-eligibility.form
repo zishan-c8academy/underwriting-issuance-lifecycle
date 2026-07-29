@@ -1,0 +1,51 @@
+{
+  "components": [
+    {
+      "text": "## Register Settlement Eligibility\nAll approvals are complete. Add the CUSIP to the Masterfile to make it settlement eligible.",
+      "type": "text",
+      "id": "t_rs_h"
+    },
+    {
+      "label": "CUSIP",
+      "type": "textfield",
+      "key": "cusip",
+      "id": "f_rs_cusip",
+      "readonly": true
+    },
+    {
+      "label": "Issuer Name",
+      "type": "textfield",
+      "key": "issuerName",
+      "id": "f_rs_issuer",
+      "readonly": true
+    },
+    {
+      "label": "Closing Date",
+      "type": "textfield",
+      "key": "closingDate",
+      "id": "f_rs_closing",
+      "readonly": true
+    },
+    {
+      "label": "Masterfile record id",
+      "type": "textfield",
+      "key": "masterfileRecordId",
+      "id": "f_rs_record",
+      "validate": {
+        "required": true
+      },
+      "description": "Reference for the Masterfile entry you created"
+    },
+    {
+      "label": "Registration notes",
+      "type": "textarea",
+      "key": "registrationNotes",
+      "id": "f_rs_notes"
+    }
+  ],
+  "type": "default",
+  "id": "register-settlement-eligibility",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "schemaVersion": 16
+}

@@ -1,0 +1,56 @@
+{
+  "components": [
+    {
+      "text": "## Supervisor Review\nReview the discrepancy that triggered the Masterfile correction.",
+      "type": "text",
+      "id": "t_sr_h"
+    },
+    {
+      "label": "CUSIP",
+      "type": "textfield",
+      "key": "cusip",
+      "id": "f_sr_cusip",
+      "readonly": true
+    },
+    {
+      "label": "Comparison notes from the reviewer",
+      "type": "textarea",
+      "key": "comparisonNotes",
+      "id": "f_sr_comp",
+      "readonly": true
+    },
+    {
+      "label": "Outcome",
+      "type": "select",
+      "key": "supervisorDecision",
+      "id": "f_sr_decision",
+      "values": [
+        {
+          "label": "Acknowledged",
+          "value": "ACKNOWLEDGED"
+        },
+        {
+          "label": "Escalate further",
+          "value": "ESCALATE"
+        }
+      ],
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Supervisor notes",
+      "type": "textarea",
+      "key": "supervisorNotes",
+      "id": "f_sr_notes",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "supervisor-review",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "schemaVersion": 16
+}

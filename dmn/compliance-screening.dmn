@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_ComplianceScreening" name="Compliance Screening" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.x" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <decision id="compliance-screening" name="Compliance Screening">
+    <decisionTable id="DecisionTable_ComplianceScreening" hitPolicy="FIRST">
+      <input id="Input_IssuerName" label="Issuer Name">
+        <inputExpression id="IE_IssuerName" typeRef="string"><text>issuerName</text></inputExpression>
+      </input>
+      <input id="Input_IssuerCountry" label="Issuer Country">
+        <inputExpression id="IE_IssuerCountry" typeRef="string"><text>issuerCountry</text></inputExpression>
+      </input>
+      <output id="Output_Disposition" label="Disposition" name="disposition" typeRef="string" />
+      <output id="Output_Rationale" label="Rationale" name="rationale" typeRef="string" />
+
+      <rule id="Rule_RestrictedCountry">
+        <description>Issuer country on the restricted jurisdictions list</description>
+        <inputEntry id="ce_1_1"><text></text></inputEntry>
+        <inputEntry id="ce_1_2"><text>"IR","KP","SY","CU"</text></inputEntry>
+        <outputEntry id="co_1_1"><text>"REVIEW"</text></outputEntry>
+        <outputEntry id="co_1_2"><text>"Issuer country is on the restricted jurisdictions list: manual compliance review required."</text></outputEntry>
+      </rule>
+      <rule id="Rule_WatchlistName">
+        <description>Issuer name matches a compliance watchlist entry</description>
+        <inputEntry id="ce_2_1"><text>"Northwind Capital Partners","Kestrel Holdings AG"</text></inputEntry>
+        <inputEntry id="ce_2_2"><text></text></inputEntry>
+        <outputEntry id="co_2_1"><text>"REVIEW"</text></outputEntry>
+        <outputEntry id="co_2_2"><text>"Issuer name matches a compliance watchlist entry: manual compliance review required."</text></outputEntry>
+      </rule>
+      <rule id="Rule_Clear">
+        <description>No match against the compliance file</description>
+        <inputEntry id="ce_3_1"><text></text></inputEntry>
+        <inputEntry id="ce_3_2"><text></text></inputEntry>
+        <outputEntry id="co_3_1"><text>"CLEAR"</text></outputEntry>
+        <outputEntry id="co_3_2"><text>"No match against the compliance file: cleared automatically."</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="compliance-screening">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

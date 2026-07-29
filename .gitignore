@@ -1,0 +1,23 @@
+# Secrets, never commit
+.env
+*.secret
+connector-secrets*
+*.pem
+*.jks
+*.keystore
+*.truststore
+*.p12
+
+# Tooling
+node_modules/
+*.log
+
+# Camunda 8 Run runtime (if unzipped inside the repo)
+camunda-zeebe*/
+c8run/
+elasticsearch*/
+*.data/
+
+# OS
+.DS_Store
+Thumbs.db

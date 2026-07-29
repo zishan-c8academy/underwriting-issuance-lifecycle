@@ -1,0 +1,48 @@
+{
+  "components": [
+    {
+      "text": "## Send Confirmation Email\nSend the agent a blank Security Attributes page. CUSIP and Closing Date are populated; the client fills in the rest.",
+      "type": "text",
+      "id": "t_se_h"
+    },
+    {
+      "label": "CUSIP (populated)",
+      "type": "textfield",
+      "key": "cusip",
+      "id": "f_se_cusip",
+      "readonly": true
+    },
+    {
+      "label": "Closing Date (populated)",
+      "type": "textfield",
+      "key": "closingDate",
+      "id": "f_se_closing",
+      "readonly": true
+    },
+    {
+      "text": "Left blank for the client to confirm: First Payment Date, Maturity Date, Interest Rate, Payment Frequency.",
+      "type": "text",
+      "id": "t_se_blank"
+    },
+    {
+      "label": "Agent email address",
+      "type": "textfield",
+      "key": "agentEmail",
+      "id": "f_se_email",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Security Attributes page sent to the agent",
+      "type": "checkbox",
+      "key": "emailSent",
+      "id": "f_se_sent"
+    }
+  ],
+  "type": "default",
+  "id": "send-confirmation-email",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "schemaVersion": 16
+}

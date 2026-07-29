@@ -1,0 +1,53 @@
+{
+  "components": [
+    {
+      "text": "## Escalation Review\nA task passed its due time. The original task is still open, this is the supervisor's parallel action.",
+      "type": "text",
+      "id": "t_er_h"
+    },
+    {
+      "label": "CUSIP",
+      "type": "textfield",
+      "key": "cusip",
+      "id": "f_er_cusip",
+      "readonly": true
+    },
+    {
+      "label": "Action taken",
+      "type": "select",
+      "key": "escalationAction",
+      "id": "f_er_action",
+      "values": [
+        {
+          "label": "Chase the assignee",
+          "value": "CHASE"
+        },
+        {
+          "label": "Reassign the task",
+          "value": "REASSIGN"
+        },
+        {
+          "label": "Accept the delay",
+          "value": "ACCEPT_DELAY"
+        }
+      ],
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Escalation notes",
+      "type": "textarea",
+      "key": "escalationNotes",
+      "id": "f_er_notes",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "escalation-review",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "schemaVersion": 16
+}

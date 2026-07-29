@@ -1,0 +1,118 @@
+{
+  "components": [
+    {
+      "text": "## Security Info\nConfirm security-level attributes.",
+      "type": "text",
+      "id": "t_sec_h"
+    },
+    {
+      "label": "CUSIP",
+      "type": "textfield",
+      "key": "cusip",
+      "id": "f_sec_cusip",
+      "readonly": true
+    },
+    {
+      "label": "Security Takedown",
+      "type": "textfield",
+      "key": "securityTakedown",
+      "id": "f_securityTakedown"
+    },
+    {
+      "label": "Dated Date",
+      "type": "textfield",
+      "key": "datedDate",
+      "id": "f_datedDate",
+      "description": "Format YYYY-MM-DD"
+    },
+    {
+      "label": "First Payment Date",
+      "type": "textfield",
+      "key": "firstPaymentDate",
+      "id": "f_firstPaymentDate",
+      "description": "Format YYYY-MM-DD"
+    },
+    {
+      "label": "Maturity Date",
+      "type": "textfield",
+      "key": "maturityDate",
+      "id": "f_maturityDate",
+      "description": "Format YYYY-MM-DD"
+    },
+    {
+      "label": "Interest Type",
+      "type": "select",
+      "key": "interestType",
+      "id": "f_interestType",
+      "values": [
+        {
+          "label": "Fixed",
+          "value": "FIXED"
+        },
+        {
+          "label": "Floating",
+          "value": "FLOATING"
+        },
+        {
+          "label": "Zero coupon",
+          "value": "ZERO"
+        }
+      ],
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Interest Start",
+      "type": "textfield",
+      "key": "interestStart",
+      "id": "f_interestStart",
+      "description": "Format YYYY-MM-DD"
+    },
+    {
+      "label": "Interest End",
+      "type": "textfield",
+      "key": "interestEnd",
+      "id": "f_interestEnd",
+      "description": "Format YYYY-MM-DD"
+    },
+    {
+      "label": "Interest Rate (%)",
+      "type": "number",
+      "key": "interestRate",
+      "id": "f_interestRate"
+    },
+    {
+      "label": "Payment Frequency",
+      "type": "select",
+      "key": "paymentFrequency",
+      "id": "f_paymentFrequency",
+      "values": [
+        {
+          "label": "Monthly",
+          "value": "MONTHLY"
+        },
+        {
+          "label": "Quarterly",
+          "value": "QUARTERLY"
+        },
+        {
+          "label": "Semi-annual",
+          "value": "SEMI_ANNUAL"
+        },
+        {
+          "label": "Annual",
+          "value": "ANNUAL"
+        }
+      ],
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "ecd-security-info",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "schemaVersion": 16
+}

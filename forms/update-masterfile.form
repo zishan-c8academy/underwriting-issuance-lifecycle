@@ -1,0 +1,61 @@
+{
+  "components": [
+    {
+      "text": "## Update Masterfile\nThe recorded values do not match. Update the applicable security attributes in the Masterfile.",
+      "type": "text",
+      "id": "t_um_h"
+    },
+    {
+      "label": "CUSIP",
+      "type": "textfield",
+      "key": "cusip",
+      "id": "f_um_cusip",
+      "readonly": true
+    },
+    {
+      "text": "Corrected values (pre-filled from the client's confirmation, edit if the closing docs differ):",
+      "type": "text",
+      "id": "t_um_note"
+    },
+    {
+      "label": "First Payment Date",
+      "type": "textfield",
+      "key": "clientFirstPaymentDate",
+      "id": "f_um_fpd",
+      "description": "Format YYYY-MM-DD"
+    },
+    {
+      "label": "Maturity Date",
+      "type": "textfield",
+      "key": "clientMaturityDate",
+      "id": "f_um_md",
+      "description": "Format YYYY-MM-DD"
+    },
+    {
+      "label": "Interest Rate (%)",
+      "type": "number",
+      "key": "clientInterestRate",
+      "id": "f_um_ir"
+    },
+    {
+      "label": "Payment Frequency",
+      "type": "textfield",
+      "key": "clientPaymentFrequency",
+      "id": "f_um_pf"
+    },
+    {
+      "label": "What was changed in the Masterfile",
+      "type": "textarea",
+      "key": "masterfileUpdateNotes",
+      "id": "f_um_notes",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "update-masterfile",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "schemaVersion": 16
+}

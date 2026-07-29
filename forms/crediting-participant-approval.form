@@ -1,0 +1,73 @@
+{
+  "components": [
+    {
+      "text": "## Crediting Participant Approval\nConfirm the crediting participant accepts the security. Choose Pending to keep the task open while you wait.",
+      "type": "text",
+      "id": "t_cp_h"
+    },
+    {
+      "label": "CUSIP",
+      "type": "textfield",
+      "key": "cusip",
+      "id": "f_cp_cusip",
+      "readonly": true
+    },
+    {
+      "label": "Issuer Name",
+      "type": "textfield",
+      "key": "issuerName",
+      "id": "f_cp_issuer",
+      "readonly": true
+    },
+    {
+      "label": "Takedown Amount",
+      "type": "number",
+      "key": "takedownAmount",
+      "id": "f_cp_amount",
+      "readonly": true
+    },
+    {
+      "label": "Crediting Participant",
+      "type": "textfield",
+      "key": "creditingParticipant",
+      "id": "f_cp_name"
+    },
+    {
+      "label": "Decision",
+      "type": "select",
+      "key": "cpDecision",
+      "id": "f_cp_decision",
+      "values": [
+        {
+          "label": "Approve",
+          "value": "APPROVED"
+        },
+        {
+          "label": "Pending, ask again",
+          "value": "PENDING"
+        },
+        {
+          "label": "Reject",
+          "value": "REJECTED"
+        }
+      ],
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Participant notes",
+      "type": "textarea",
+      "key": "cpNotes",
+      "id": "f_cp_notes",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "crediting-participant-approval",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "schemaVersion": 16
+}

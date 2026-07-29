@@ -1,0 +1,70 @@
+{
+  "components": [
+    {
+      "text": "## Legal Approval\nLegal review and approval of the offering.",
+      "type": "text",
+      "id": "t_la_h"
+    },
+    {
+      "label": "CUSIP",
+      "type": "textfield",
+      "key": "cusip",
+      "id": "f_la_cusip",
+      "readonly": true
+    },
+    {
+      "label": "Issuer Name",
+      "type": "textfield",
+      "key": "issuerName",
+      "id": "f_la_issuer",
+      "readonly": true
+    },
+    {
+      "label": "Closing Date",
+      "type": "textfield",
+      "key": "closingDate",
+      "id": "f_la_closing",
+      "readonly": true
+    },
+    {
+      "label": "Brokerage Agreement Date",
+      "type": "textfield",
+      "key": "brokerageAgreementDate",
+      "id": "f_la_baDate",
+      "readonly": true
+    },
+    {
+      "label": "Decision",
+      "type": "select",
+      "key": "legalDecision",
+      "id": "f_la_decision",
+      "values": [
+        {
+          "label": "Approve",
+          "value": "APPROVED"
+        },
+        {
+          "label": "Reject",
+          "value": "REJECTED"
+        }
+      ],
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Legal notes",
+      "type": "textarea",
+      "key": "legalNotes",
+      "id": "f_la_notes",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "legal-approval",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "schemaVersion": 16
+}

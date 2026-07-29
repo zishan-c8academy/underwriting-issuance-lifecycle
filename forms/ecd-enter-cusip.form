@@ -1,0 +1,24 @@
+{
+  "components": [
+    {
+      "text": "## Enter CUSIP\nInput the CUSIP to identify the security.",
+      "type": "text",
+      "id": "t_cusip_h"
+    },
+    {
+      "label": "CUSIP",
+      "type": "textfield",
+      "key": "cusip",
+      "id": "f_cusip",
+      "validate": {
+        "required": true
+      },
+      "description": "9-character security identifier"
+    }
+  ],
+  "type": "default",
+  "id": "ecd-enter-cusip",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "schemaVersion": 16
+}
